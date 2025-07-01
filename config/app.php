@@ -67,7 +67,9 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Rangoon',
+    // 'timezone' => 'Asia/Rangoon',
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
+
 
     /*
     |--------------------------------------------------------------------------

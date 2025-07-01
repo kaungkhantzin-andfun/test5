@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Location;
 use App\Models\Property;
 use App\Helpers\MyHelper;
+use App\Models\Blog;
 use App\Models\PropertyPurpose;
 use Illuminate\Support\Facades\Storage;
 use Artesaos\SEOTools\Facades\JsonLdMulti;
@@ -18,19 +19,26 @@ class Home extends Component
 {
     public $slides;
     public $featuredProperties;
+    public $resendPosts;
     public $saleProperties;
     public $rentProperties;
     public $seoImages;
+    public $blogs;
 
     public function mount()
     {
         $this->slides = Slider::whereHas('image')->with('image')->get();
+        $this->blogs = Blog::whereHas('categories')->get();
 
         // for now we will show latest instead of featured
         // $this->featuredProperties = Property::whereNotNull('featured')->whereNull('soldout')->with(['images', 'location', 'type', 'purpose', 'user', 'detail'])->orderBy('stat')->take(9)->get();
         $featuredBuilder = Property::whereDate('created_at', Carbon::today())->whereNull('soldout')->with(['images', 'location', 'type', 'purpose', 'user', 'detail']);
+        $resentBuilder = Property::whereDate('created_at', Carbon::today())->whereNull('soldout')->with(['images', 'location', 'type', 'purpose', 'user', 'detail']);
         MyHelper::increaseViewCount($featuredBuilder);
+        MyHelper::increaseViewCount($resentBuilder);
         $this->featuredProperties = $featuredBuilder->get();
+        $this->resendPosts = $featuredBuilder->take(6)->get();
+
 
         $saleBuilder = Property::whereNull('soldout')->where('property_purpose_id', 1)->with(['images', 'location', 'type', 'purpose', 'detail'])->orderBy('created_at', 'desc')->take(8);
         MyHelper::increaseViewCount($saleBuilder);
