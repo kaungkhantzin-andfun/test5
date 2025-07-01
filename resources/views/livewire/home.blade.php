@@ -199,5 +199,115 @@
             </div>
         </div>
     </section>
+
+    <section class="bg-gray-700 py-20">
+    <div class="container mx-auto px-20 ">
+        <h2 class="text-3xl font-bold text-center text-white mb-10">Why Choose Us</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center">
+            <!-- Feature 1 -->
+            <div style="border-top: 4px solid yellow" class=" border-yellow-300 p-8 gap-4 flex text-white transform hover:-translate-y-2 transition-transform duration-300">
+                <div class="mb-4">
+                    <svg class="w-16 h-16 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div class="ms-5">
+                    <h3 class="text-xl font-semibold text-white mb-2">Trusted by Thousands</h3>
+                    <p class="text-gray-200">We have a proven track record of success, with thousands of satisfied clients who have found their dream homes with us.</p>
+                </div>
+            </div>
+            <!-- Feature 1 -->
+            <div style="border-top: 4px solid yellow" class=" border-yellow-300 p-8 gap-4 flex text-white transform hover:-translate-y-2 transition-transform duration-300">
+                <div class="mb-4">
+                    <svg class="w-16 h-16 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div class="ms-5">
+                    <h3 class="text-xl font-semibold text-white mb-2">Trusted by Thousands</h3>
+                    <p class="text-gray-200">We have a proven track record of success, with thousands of satisfied clients who have found their dream homes with us.</p>
+                </div>
+            </div>
+            <!-- Feature 1 -->
+            <div style="border-top: 4px solid yellow" class=" border-yellow-300 p-8 gap-4 flex text-white transform hover:-translate-y-2 transition-transform duration-300">
+                <div class="mb-4">
+                    <svg class="w-16 h-16 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div class="ms-5">
+                    <h3 class="text-xl font-semibold text-white mb-2">Trusted by Thousands</h3>
+                    <p class="text-gray-200">We have a proven track record of success, with thousands of satisfied clients who have found their dream homes with us.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- New Latest News Section -->
+<section class="bg-blue-200 py-10">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-blue-800 mb-6 text-center">Latest News</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- News Item 1 -->
+            <div class="flex gap-10 p-4">
+                <div class="flex flex-col justify-start mb-6 me-6 px-6">
+                    <div class="border border-yellow-400 p-6">
+                        <span class="bg-green-200 text-green-800 text-2xl font-semibold px-2 py-1 rounded">1</span>
+                        <span class="text-gray-500 text-md ml-2">MAY</span>
+                    </div>
+                </div>
+                <div class="text-start ms-6s">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-2">Dating With A Objective</h3>
+                    <p class="text-gray-600 text-sm">A revitalizing and fascinating occasion can be had while dating. Additionally, it may drain your strength. For some, dating is a means of finding a lifelong partner for a marria...</p>
+                </div>
+            </div><!-- News Item 1 -->
+            <div class="flex gap-10 p-4">
+                <div class="flex flex-col justify-start mb-6 me-6 px-6">
+                    <div class="border border-yellow-400 p-6">
+                        <span class="bg-green-200 text-green-800 text-2xl font-semibold px-2 py-1 rounded">1</span>
+                        <span class="text-gray-500 text-md ml-2">MAY</span>
+                    </div>
+                </div>
+                <div class="text-start ms-6s">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-2">Dating With A Objective</h3>
+                    <p class="text-gray-600 text-sm">A revitalizing and fascinating occasion can be had while dating. Additionally, it may drain your strength. For some, dating is a means of finding a lifelong partner for a marria...</p>
+                </div>
+            </div>
+            <!-- News Item 1 -->
+            <div class="flex gap-10 p-4">
+                <div class="flex flex-col justify-start mb-6 me-6 px-6">
+                    <div class="border border-yellow-400 p-6">
+                        <span class="bg-green-200 text-green-800 text-2xl font-semibold px-2 py-1 rounded">1</span>
+                        <span class="text-gray-500 text-md ml-2">MAY</span>
+                    </div>
+                </div>
+                <div class="text-start ms-6s">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-2">Dating With A Objective</h3>
+                    <p class="text-gray-600 text-sm">A revitalizing and fascinating occasion can be had while dating. Additionally, it may drain your strength. For some, dating is a means of finding a lifelong partner for a marria...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Partners Section -->
+<section class="bg-blue-200 py-10">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold text-blue-800 mb-6">Our Partners</h2>
+        <div class="flex justify-center items-center gap-8 flex-wrap">
+            <!-- Partner 1 -->
+            <div class="text-center">
+                <div class="w-32 h-16 bg-gray-200 flex items-center justify-center text-gray-800 font-semibold">High-Rise Real Estate Company</div>
+            </div>
+            <!-- Partner 2 -->
+            <div class="text-center">
+                <div class="w-32 h-16 bg-gray-200 flex items-center justify-center text-gray-800 font-semibold">Mark & Co. Buildings</div>
+            </div>
+            <!-- Partner 3 -->
+            <div class="text-center">
+                <div class="w-32 h-16 bg-gray-200 flex items-center justify-center text-gray-800 font-semibold">Real Estate Experts</div>
+            </div>
+            <!-- Partner 4 -->
+            <div class="text-center">
+                <div class="w-32 h-16 bg-gray-200 flex items-center justify-center text-gray-800 font-semibold">Home Design</div>
+            </div>
+        </div>
+    </div>
+</section>
    
 </div>
