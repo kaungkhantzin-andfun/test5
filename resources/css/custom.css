@@ -1,0 +1,322 @@
+@layer base {
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="time"],
+    input[type="week"],
+    select[multiple],
+    textarea,
+    .input,
+    select {
+        @apply w-full p-2 border-gray-200 rounded-md focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50;
+    }
+
+    /* for error red border */
+    input[type="text"].border-red-600,
+    input[type="email"].border-red-600,
+    input[type="url"].border-red-600,
+    input[type="password"].border-red-600,
+    input[type="number"].border-red-600,
+    input[type="date"].border-red-600,
+    input[type="datetime-local"].border-red-600,
+    input[type="month"].border-red-600,
+    input[type="search"].border-red-600,
+    input[type="tel"].border-red-600,
+    input[type="time"].border-red-600,
+    input[type="week"].border-red-600,
+    select[multiple].border-red-600 {
+        border-color: rgba(220, 38, 38);
+    }
+}
+
+@layer components {
+    .blue-gradient {
+        @apply text-white from-logo-blue to-logo-purple;
+    }
+
+    .text-gradient {
+        @apply !text-transparent bg-gradient-to-r blue-gradient bg-clip-text;
+    }
+}
+
+/* font embed */
+@font-face {
+    font-family: "Pyidaungsu ZawDecode";
+    src: url("../webfonts/burmese/PyidaungsuZawDecode.woff2") format("woff2"),
+        url("../webfonts/burmese/PyidaungsuZawDecode.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+/* end font embed */
+
+* {
+    font-family: "Pyidaungsu ZawDecode";
+}
+
+.container {
+    @apply px-4 mx-auto lg:px-0;
+}
+
+.slider-btn-wrapper {
+    @apply absolute inset-y-0 top-0 z-10 flex items-center overflow-hidden md:-top-20 md:inset-y-auto;
+}
+.slider-btn {
+    @apply flex items-center justify-center text-white rounded md:py-2 md:px-3 focus:outline-none bg-gradient-to-tr;
+}
+
+/* trix css */
+.trix-content {
+    @apply focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50;
+}
+.trix-content ul {
+    list-style-type: disc !important;
+    margin-left: 25px;
+}
+
+.trix-content ol {
+    list-style-type: decimal !important;
+    margin-left: 25px;
+}
+
+.property_detail a,
+.trix-content a {
+    color: blue;
+    text-decoration: underline;
+}
+
+.property_detail a:hover,
+.trix-content a:hover {
+    text-decoration: none;
+}
+
+.trix-button-group--file-tools {
+    display: none !important;
+}
+
+/* end trix css */
+
+.sub_menu:hover > ul {
+    visibility: visible;
+}
+
+.label {
+    @apply text-sm font-semibold text-gray-700;
+}
+
+@media screen and (min-width: 640px) {
+    /* Tailwind's sm breakpoint */
+    #single-slideshow {
+        height: 600px;
+    }
+}
+@media screen and (max-width: 639.99px) {
+    /* Tailwind's sm breakpoint */
+    #single-slideshow {
+        height: 500px;
+    }
+}
+
+/* Tooltip container */
+.tooltip {
+    @apply relative;
+}
+
+.tooltiptext {
+    @apply absolute z-10 hidden px-2 py-1 mr-3 text-center text-gray-900 bg-white border rounded-md shadow-sm min-w-max -top-1 right-full;
+}
+
+.tt-right {
+    @apply left-full;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext,
+.tooltip:hover .tt-right {
+    display: block;
+}
+
+.error {
+    @apply text-sm text-red-600;
+}
+
+.icon-circle {
+    @apply flex items-center justify-center w-8 h-8 rounded-full !important;
+}
+
+/* Single page */
+.single-h2 {
+    @apply font-bold uppercase text-logo-green;
+}
+/* Navbar */
+.main_nav a {
+    @apply text-gray-700;
+}
+.parent_nav {
+    @apply flex py-3 hover:text-logo-blue;
+}
+.main_nav a.current_nav {
+    @apply font-bold text-logo-blue;
+}
+.dropdown {
+    @apply bg-white space-y-2 shadow-lg p-2 absolute invisible min-w-max mt-0.5 rounded top-full z-10;
+}
+.side-dropdown {
+    @apply absolute invisible p-2 space-y-1 bg-white rounded shadow-lg left-full min-w-max;
+}
+
+/* Buttons */
+.btn {
+    @apply flex items-center px-3 py-2 font-semibold rounded cursor-pointer w-max;
+}
+
+.btn-primary {
+    @apply text-white bg-gray-700;
+}
+.btn-success {
+    @apply text-white bg-green-600;
+}
+.info {
+    @apply text-xs font-bold text-blue-600;
+}
+.danger {
+    @apply text-xs font-bold text-red-600;
+}
+.btn-danger {
+    @apply text-white bg-red-600;
+}
+/* End of Buttons */
+
+/* Dashboard */
+.nav_item_wrapper {
+    @apply relative flex justify-between pr-10;
+}
+.nav_item {
+    @apply flex items-center gap-2 px-3 py-2 transition-all grow;
+}
+.sub_nav_item {
+    @apply flex items-center gap-2;
+}
+.nav_item:hover,
+.nav_item.current {
+    @apply bg-gradient-to-r from-blue-300 to-transparent;
+}
+.user_nav_item,
+.nav-dropdown .nav_item,
+.user_plus_icon {
+    @apply flex items-center gap-2 px-3 py-2 transition-all rounded min-w-max;
+}
+
+.nav-dropdown .user_nav_item {
+    @apply w-full;
+}
+
+.user_nav_item:hover,
+.nav-dropdown .nav_item:hover,
+.user_plus_icon:hover,
+.user_plus_icon.sub_current,
+.user_nav_item.current {
+    @apply text-white bg-gradient-to-r from-logo-blue to-logo-blue-dark;
+}
+.plus_icon {
+    @apply p-1 absolute items-center flex right-2.5 py-1 inset-y-1.5;
+}
+.sub_current,
+.plus_icon:hover {
+    @apply bg-white rounded text-logo-blue-dark;
+}
+
+.nav_sub {
+    @apply space-y-1;
+}
+.nav_sub .nav_item {
+    @apply pl-6;
+}
+
+/* Users */
+.user_th {
+    @apply px-4 py-3 text-xs font-medium leading-4 text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50;
+}
+.user_td {
+    @apply px-4 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200;
+}
+.input {
+    @apply block w-full p-2 border-gray-200 rounded-md shadow-sm;
+}
+.checkbox {
+    @apply font-normal rounded text-logo-blue;
+}
+.radio {
+    @apply text-gray-700 border-blue-300 rounded-full shadow-sm;
+}
+.img_del {
+    @apply absolute h-5 -top-2 -right-2 bg-red-600 text-white rounded-full p-0.5 shadow;
+}
+.table_wrapper {
+    @apply inline-block min-w-full overflow-hidden align-middle border border-b border-gray-200 sm:rounded-lg;
+}
+/* End of Dashboard */
+
+/* Heading */
+.h1 {
+    @apply mb-2 text-2xl md:text-3xl xl:text-4xl;
+}
+.h2 {
+    @apply mb-2 text-xl md:text-2xl xl:text-3xl;
+}
+.h3 {
+    @apply mb-2 text-lg md:text-xl xl:text-2xl;
+}
+.sub-title {
+    @apply mb-6 font-mono text-xs text-gray-400 md:text-lg;
+}
+/* End of Heading */
+
+/* CK Editor */
+.ck-content {
+    @apply prose;
+}
+/* End of CK Editor */
+
+.table-cell {
+    @apply p-2;
+}
+
+footer a {
+    @apply text-logo-green-light hover:underline;
+}
+
+.prose {
+    @apply !leading-9 text-lg;
+}
+
+.prose a {
+    @apply hover:no-underline;
+}
+
+.blog_card_img {
+    @apply object-cover w-full h-64 rounded-t-lg;
+}
+
+.related_searches a {
+    @apply no-underline hover:underline;
+}
+
+.related_searches ul {
+    @apply grid text-base gap-x-6 md:grid-cols-2;
+}
+
+ul.add-post-notice {
+    @apply danger;
+}
+
+ul.add-post-notice li {
+    @apply flex items-center gap-1;
+}

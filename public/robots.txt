@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://www.myanmarhouse.com.mm/sitemap.xml
