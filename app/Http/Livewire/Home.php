@@ -22,6 +22,10 @@ class Home extends Component
     public $resendPosts;
     public $saleProperties;
     public $rentProperties;
+    // two resent Properties and
+    // three resent Properties
+    public $twoResendProperties;
+    public $threeResendProperties;
     public $seoImages;
     public $blogs;
 
@@ -29,6 +33,20 @@ class Home extends Component
     {
         $this->slides = Slider::whereHas('image')->with('image')->get();
         $this->blogs = Blog::whereHas('categories')->get();
+        // Get latest 2 properties
+        $this->twoResendProperties = Property::whereNull('soldout')
+            ->with(['images', 'location', 'type', 'purpose', 'user', 'detail'])
+            ->orderBy('created_at', 'desc')
+            ->take(2)
+            ->get();
+
+        // Get 3 properties after the first 2 (i.e., 3rd, 4th, 5th latest)
+        $this->threeResendProperties = Property::whereNull('soldout')
+            ->with(['images', 'location', 'type', 'purpose', 'user', 'detail'])
+            ->orderBy('created_at', 'desc')
+            ->skip(2)
+            ->take(3)
+            ->get();
 
         // for now we will show latest instead of featured
         // $this->featuredProperties = Property::whereNotNull('featured')->whereNull('soldout')->with(['images', 'location', 'type', 'purpose', 'user', 'detail'])->orderBy('stat')->take(9)->get();

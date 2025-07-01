@@ -174,29 +174,21 @@
             <!-- First Row: 2 Posts -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <!-- Card 1 -->
-                {{-- resendPosts --}}
-                @foreach ($resendPosts as $resendPost)
+                @foreach ($twoResendProperties as $item)
                     <div class="card-overlay bg-white overflow-hidden transform transition duration-300">
-
-
-                        {{-- Removed layout feature --}}
                         <a
-                            href="{{ LaravelLocalization::localizeUrl('/properties/' . $resendPost->id . '/' . $resendPost->slug) }}">
-                            <img class="object-cover w-full h-52 max-h-72 lg:h-full"
-                                src="{{ $resendPost->images->first() ? Storage::url('card_' . $resendPost->images->first()->path) : asset('assets/images/nia.jpg') }}">
+                            href="{{ LaravelLocalization::localizeUrl('/properties/' . $item->id . '/' . $item->slug) }}">
+                            <img class="object-cover w-full h-52  lg:h-full"
+                                src="{{ $item->images->first() ? Storage::url('card_' . $item->images->first()->path) : asset('assets/images/nia.jpg') }}">
                         </a>
-
                         <div class="overlay-content">
 
                             <div>
-                                <span class="inline-block px-2 py-1 text-lg  text-white ">Welcome to BR104 – Your
-                                    Relaxing
-                                    Holiday Hideaway in Bali Residence!</span>
-
-                                {{ $resendPost->location[0]['name'] }}
+                                <span class="inline-block px-2 py-1 text-lg  text-white ">
+                                    {{ $item->location[0]['name'] }}</span>
                                 <div class="flex items-center mt-2">
-                                    <span class="text-xl font-bold"> {{ $resendPost->price }} MMK</span>
-                                    {{-- <span class="text-sm ml-2">{{ $resendPost->type }}</span> --}}
+                                    <span class="text-xl font-bold"> {{ $item->price }} MMK</span>
+                                    {{-- <span class="text-sm ml-2"> {{ $item->area }}</span> --}}
                                 </div>
                             </div>
                             <span class="eye-icon" style="font-size: 1.2rem;">
@@ -211,18 +203,53 @@
                                     </svg>
 
                                 </div>
-
                             </span>
                         </div>
                         <span
                             class="absolute top-2 left-2 px-2 py-1 text-xs font-semibold text-white bg-red-500">Featured</span>
-
                     </div>
                 @endforeach
 
+                <!-- Card 2 -->
+
             </div>
 
+            <!-- Second Row: 3 Posts -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <!-- Card 3 -->
+                @foreach ($threeResendProperties as $item)
+                    <div class="card-overlay bg-white overflow-hidden transform transition duration-300">
+                        <a
+                            href="{{ LaravelLocalization::localizeUrl('/properties/' . $item->id . '/' . $item->slug) }}">
+                            <img class="object-cover w-full h-52  lg:h-full"
+                                src="{{ $item->images->first() ? Storage::url('card_' . $item->images->first()->path) : asset('assets/images/nia.jpg') }}">
+                        </a>
+                        <div class="overlay-content">
+                            <div>
+                                <span class="inline-block px-2 py-1 text-lg  text-white ">
+                                    {{ $item->location[0]['name'] }}</span>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-xl font-bold"> {{ $item->price }} MMK</span>
+                                    {{-- <span class="text-sm ml-2">3 Beds · 2 Baths · 2480 sqft</span> --}}
+                                </div>
+                            </div>
+                            <span class="eye-icon" style="font-size: 1.2rem;">
+                                <div class="flex items-center gap-1  px-2 py-1 rounded">
+                                    <svg class="w-6 h-6" fill="none" stroke="#CCCCCC" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                        </path>
+                                    </svg>
 
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </section>
 
