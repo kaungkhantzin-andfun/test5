@@ -1,4 +1,8 @@
 <div x-data="{showSearch: false}" class="min-h-screen px-4 py-6 mx-auto md:container xl:px-0 md:px-4">
+    <!-- Search Form -->
+    <div class="mb-8">
+        <livewire:search-form :mainClass="'mb-8'" />
+    </div>
 
     <div class="flex flex-col py-4 space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 md:px-0">
         <header>

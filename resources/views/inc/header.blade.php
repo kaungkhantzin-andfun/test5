@@ -2,56 +2,70 @@
 <div class="mt-[15px]">
 <nav x-data="{ open: false }" class="bg-white sticky top-0 z-50 shadow-md">
     <div class="container mx-auto px-4">
-        <div class="flex justify-center items-center" style="height: 104px;">
+        <div class="flex items-center justify-between h-26 py-2">
             <!-- Logo -->
-            <div class="absolute left-4">
+            <div class="flex-shrink-0">
                 <a href="{{ LaravelLocalization::localizeUrl('/') }}" class="flex items-center">
-                    <img class="h-20 w-auto" src="{{ asset('assets/images/Myanmar-House-Logo.png') }}" 
+                    <img class="h-20 w-auto" src="{{ asset('assets/images/Sun4u.png') }}" 
                          alt="{{ __('seo.site.name') }} Logo">
                 </a>
             </div>
 
-            <!-- Centered Navigation -->
-            <div class="hidden lg:flex lg:items-center lg:space-x-8">
-                @include('navigation-dropdown')
-            </div>
+            <!-- Main Navigation -->
+            <div class="hidden lg:flex lg:items-center lg:justify-center lg:flex-1 lg:px-8">
+                <nav class="flex justify-center w-full">
+                    @include('navigation-dropdown')
+                </nav>
 
-            <!-- Right Side Elements -->
-            <div class="absolute right-4 flex items-center space-x-4">
-                <!-- Language Switcher -->
-                <div x-data="{ open: false }" class="relative">
-                    <button @click="open = !open" class="flex items-center text-gray-700 hover:text-blue-600">
-                        {{ strtoupper(app()->getLocale()) }}
-                        <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-                    <div x-show="open" @click.away="open = false" 
-                         class="origin-top-right absolute right-0 mt-2 w-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                            <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
-                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                {{ strtoupper($localeCode) }}
-                            </a>
-                        @endforeach
+                <!-- Right Side Elements -->
+                <div class="flex items-center space-x-6 ml-8">
+                    <!-- Language Switcher -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open" class="flex items-center text-gray-700 hover:text-blue-600">
+                            {{ strtoupper(app()->getLocale()) }}
+                            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div x-show="open" @click.away="open = false" 
+                            class="origin-top-right absolute right-0 mt-2 w-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    {{ strtoupper($localeCode) }}
+                                </a>
+                            @endforeach
+                        </div>
                     </div>
-                </div>
 
-                <!-- Auth Links -->
-                @auth
-                    <x-profile-dropdown />
-                @else
-                    <a href="{{ LaravelLocalization::localizeUrl(route('login')) }}" 
-                       class="text-gray-700 hover:text-blue-600">
-                        {{ __('Sign In') }}
-                    </a>
-                    @if (Route::has('register'))
-                        <a href="{{ LaravelLocalization::localizeUrl(route('register')) }}" 
-                           class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
-                            {{ __('Register') }}
+                    <!-- Auth Links -->
+                    @auth
+                        <x-profile-dropdown />
+                    @else
+                    <a href="#" 
+                        class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#F2F90A] hover:border-[#e0d809] p-1 ml-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
                         </a>
-                    @endif
-                @endauth
+                        
+                        <a href="{{ LaravelLocalization::localizeUrl(route('login')) }}" 
+                        class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#F2F90A] hover:border-[#e0d809] p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </a>
+                        @if (Route::has('register'))
+                            <a href="{{ LaravelLocalization::localizeUrl(route('register')) }}" 
+                            class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#F2F90A] hover:border-[#e0d809] p-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                                </svg>
+                            </a>
+                        @endif
+                       
+                    @endauth
+                </div>
             </div>
 
             <!-- Mobile menu button -->

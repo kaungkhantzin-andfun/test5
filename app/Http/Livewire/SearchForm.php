@@ -28,6 +28,8 @@ class SearchForm extends Component
     public $townships = [];
     public $purposes;
     public $url;
+    public $searchTerm = '';
+    public $filteredRegions = [];
 
     public $isHome;
     public $isDrawer;
@@ -38,9 +40,32 @@ class SearchForm extends Component
     public $class2;
     public $page = '';
 
+    public function updatedSearchTerm($value)
+    {
+        $this->filteredRegions = $this->getFilteredRegions($value);
+    }
+
+    public function selectRegion($regionSlug)
+    {
+        $this->selectedRegion = $regionSlug;
+        $this->updateTownships();
+    }
+
+    protected function getFilteredRegions($searchTerm = '')
+    {
+        $query = Location::query();
+        
+        if (!empty($searchTerm)) {
+            $query->where('name', 'like', '%' . $searchTerm . '%');
+        }
+        
+        return $query->get();
+    }
+
     public function mount($price = [])
     {
         $this->updateTownships();
+        $this->filteredRegions = $this->getFilteredRegions();
 
         // other variables will be assigned automatically by livewire
         if (empty($price)) {
@@ -71,17 +96,37 @@ class SearchForm extends Component
     // customer wants to reload the page
     public function search()
     {
-        $url =
-            config('app.url') .
-            '/search/' .
-            $this->selectedType . '/' .
-            $this->selectedPurpose . '/' .
-            $this->selectedRegion . '/' .
-            $this->selectedTownship . '/' .
-            $this->price['min'] . '/' .
-            $this->price['max'] . '/' .
-            ($this->keyword ?: '');
-
+        // Get the current scheme and host from the request
+        $scheme = request()->getScheme();
+        $host = request()->getHost();
+        $port = request()->getPort();
+        
+        // Build the base URL
+        $baseUrl = "{$scheme}://{$host}";
+        if (!in_array($port, [80, 443])) {
+            $baseUrl .= ":{$port}";
+        }
+        
+        // Build the search path
+        $path = '/search/' . implode('/', [
+            $this->selectedType,
+            $this->selectedPurpose,
+            $this->selectedRegion,
+            $this->selectedTownship,
+            $this->price['min'],
+            $this->price['max'],
+            $this->keyword ?: ''
+        ]);
+        
+        // Remove any double slashes that might occur from empty values
+        $path = preg_replace('#/+#', '/', $path);
+        
+        // Remove trailing slashes
+        $path = rtrim($path, '/');
+        
+        // Build the full URL
+        $url = $baseUrl . $path;
+        
         return redirect()->to($url);
     }
 

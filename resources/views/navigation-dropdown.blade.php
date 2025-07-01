@@ -1,7 +1,7 @@
-<nav aria-labelledby="main-navigation">
-    <ul class="items-center w-full gap-5 font-bold divide-y main_nav lg:container lg:divide-y-0 lg:flex lg:mx-auto xl:px-0 lg:px-4">
-        <li>
-            <a class="parent_nav {{Route::is('home') ? 'current_nav' : ''}}" href="{{LaravelLocalization::localizeUrl('/')}}">@lang('Home')</a>
+<nav aria-labelledby="main-navigation" class="w-full">
+    <ul class="flex items-center justify-center space-x-8 font-medium main_nav">
+        <li class="flex items-center h-full">
+            <a class="parent_nav {{Route::is('home') ? 'current_nav' : ''}} py-2 px-3 block" href="{{LaravelLocalization::localizeUrl('/')}}">@lang('Home')</a>
         </li>
 
         {{-- All properties --}}
@@ -106,61 +106,7 @@
         </x-nav-dropdown-item>
         @endif --}}
 
-        <li>
-            <a class="parent_nav {{Request::is('*real-estate-agents') ? 'current_nav' : ''}}"
-                href="{{LaravelLocalization::localizeUrl('/real-estate-agents')}}">
-                {{__('Real Estate Agents')}}</a>
-        </li>
 
-        @if (count($blogCategories) > 0)
-        <x-nav-dropdown-item :current="Request::is('*blog*')" :ul-class="''" :parent-link="'/blog'" :parent="'Blog'">
-            @foreach ($blogCategories->whereNull('parent_id') as $parent_cat)
-            <li class="relative z-10 flex flex-col sub_menu">
-                @php
-                $subCategories = $blogCategories->where('parent_id', $parent_cat->id);
-                @endphp
-
-                <a class="flex items-center nav_item justify-between {{Request::is(" *blog/$parent_cat->slug*") ? 'current_nav' : ''}}"
-                    href="{{LaravelLocalization::localizeUrl('/blog/' . $parent_cat->slug . '/')}}">
-                    {{__($parent_cat->name)}}
-                    @if ( count( $subCategories ) > 0 )
-                    <x-icon.icon class="w-3 h-3" path="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                    @endif
-                </a>
-
-                @if ( count( $subCategories ) > 0 )
-                <ul class="absolute invisible p-4 space-y-1 bg-white rounded-lg shadow-lg left-full min-w-max">
-                    @foreach ($subCategories as $sub_cat)
-                    <li class="flex flex-col">
-                        <a class="nav_item {{Request::is(" *blog/$sub_cat->slug*") ? 'current_nav' : ''}}"
-                            href="{{LaravelLocalization::localizeUrl('/blog/' . $sub_cat->slug . '/')}}">{{__($sub_cat->name)}}</a>
-                    </li>
-                    @endforeach
-                </ul>
-                @endif
-
-            </li>
-            @endforeach
-        </x-nav-dropdown-item>
-        @endif
-
-        <x-nav-dropdown-item :current="Route::is('tools.*')" parent="Tools"
-            parent-icon="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z">
-            <li>
-                <a class="flex gap-1 nav_item items-center {{Route::is('tools.font-download') ? 'current_nav' : ''}}"
-                    href="{{route('tools.font-download')}}">
-                    <x-icon.icon path="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    <span class="shrink-0">{{__('Myanmar Font Download')}}</span>
-                </a>
-            </li>
-            <li>
-                <a class="flex gap-1 nav_item items-center {{Route::is('tools.font-converter') ? 'current_nav' : ''}}"
-                    href="{{route('tools.font-converter')}}">
-                    <x-icon.icon path="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                    <span class="shrink-0">{{__('Myanmar Font Converter')}}</span>
-                </a>
-            </li>
-        </x-nav-dropdown-item>
 
         @auth
         <x-nav-dropdown-item :current="Route::is('dashboard.*')" parent="Dashboard"

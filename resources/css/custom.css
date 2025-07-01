@@ -163,7 +163,9 @@
     @apply flex py-3 hover:text-logo-blue;
 }
 .main_nav a.current_nav {
-    @apply font-bold text-logo-blue;
+    @apply font-bold px-4 py-2 rounded;
+    background-color: #F2F90A;
+    color: #000000;
 }
 .dropdown {
     @apply bg-white space-y-2 shadow-lg p-2 absolute invisible min-w-max mt-0.5 rounded top-full z-10;

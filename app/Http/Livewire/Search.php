@@ -43,9 +43,78 @@ class Search extends Component
     public $order = 'asc';
     public $seoTitle;
     public $seoDescription;
+    
+    // For search form
+    public $searchTerm = '';
+    public $filteredRegions = [];
+
+    public function updatedSearchTerm($value)
+    {
+        $this->filteredRegions = $this->getFilteredRegions($value);
+    }
+
+    public function selectRegion($regionSlug)
+    {
+        $this->selectedRegion = $regionSlug;
+        $this->updateTownships();
+        $this->performSearch();
+    }
+
+    protected function getFilteredRegions($searchTerm = '')
+    {
+        $query = Location::query();
+        
+        if (!empty($searchTerm)) {
+            $query->where('name', 'like', '%' . $searchTerm . '%');
+        }
+        
+        return $query->get();
+    }
+
+    public function search()
+    {
+        $this->performSearch();
+    }
+
+    protected function performSearch()
+    {
+        // Get the current scheme and host from the request
+        $scheme = request()->getScheme();
+        $host = request()->getHost();
+        $port = request()->getPort();
+        
+        // Build the base URL
+        $baseUrl = "{$scheme}://{$host}";
+        if (!in_array($port, [80, 443])) {
+            $baseUrl .= ":{$port}";
+        }
+        
+        // Build the search path
+        $path = '/search/' . implode('/', [
+            $this->selectedType,
+            $this->selectedPurpose,
+            $this->selectedRegion,
+            $this->selectedTownship,
+            $this->price['min'] ?? '',
+            $this->price['max'] ?? '',
+            $this->keyword ?? ''
+        ]);
+        
+        // Remove any double slashes that might occur from empty values
+        $path = preg_replace('#/+#', '/', $path);
+        
+        // Remove trailing slashes
+        $path = rtrim($path, '/');
+        
+        // Build the full URL
+        $url = $baseUrl . $path;
+        
+        return redirect()->to($url);
+    }
 
     public function mount($type = 'properties', $purpose = 'all-purposes', $region = 'all-regions', $township = 'all-townships', $min = '', $max = '', $keyword = '')
     {
+        $this->filteredRegions = $this->getFilteredRegions();
         // Search with property ID
         if (!empty($keyword) && (Str::contains(Str::lower($keyword), ['mhs-', 'mhr-', 'mh-']))) {
             $this->searchWithId($keyword);
