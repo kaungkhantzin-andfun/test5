@@ -185,10 +185,13 @@
 
                             <div>
                                 <span class="inline-block px-2 py-1 text-lg  text-white ">
-                                    {{ $item->location[0]['name'] }}</span>
+                                    {{ $item->detail[0]['title'] }}</span>
                                 <div class="flex items-center mt-2">
-                                    <span class="text-xl font-bold"> {{ $item->price }} MMK</span>
+
+                                    <span class="text-xl font-bold"> {{ $item->price }} $/mo</span>
                                     {{-- <span class="text-sm ml-2"> {{ $item->area }}</span> --}}
+                                    <span class="text-sm ml-2"> {{ $item->beds }} Beds · {{ $item->beds }} Baths
+                                    </span>
                                 </div>
                             </div>
                             <span class="eye-icon" style="font-size: 1.2rem;">
@@ -227,10 +230,12 @@
                         <div class="overlay-content">
                             <div>
                                 <span class="inline-block px-2 py-1 text-lg  text-white ">
-                                    {{ $item->location[0]['name'] }}</span>
+
+                                    {{ $item->detail[0]['title'] }}</span>
                                 <div class="flex items-center mt-2">
-                                    <span class="text-xl font-bold"> {{ $item->price }} MMK</span>
-                                    {{-- <span class="text-sm ml-2">3 Beds · 2 Baths · 2480 sqft</span> --}}
+                                    <span class="text-xl font-bold"> {{ $item->price }} $/mo</span>
+                                    <span class="text-sm ml-2"> {{ $item->beds }} Beds · {{ $item->beds }} Baths
+                                    </span>
                                 </div>
                             </div>
                             <span class="eye-icon" style="font-size: 1.2rem;">
