@@ -1,7 +1,20 @@
 <div x-data="{showSearch: false}" class="min-h-screen px-4 py-6 mx-auto md:container xl:px-0 md:px-4">
+    <!-- Flash Message -->
+    @if (session()->has('message'))
+        <div class="p-4 mb-4 text-green-700 bg-green-100 rounded">
+            {{ session('message') }}
+        </div>
+    @endif
+    
     <!-- Search Form -->
     <div class="mb-8">
-        <livewire:search-form :mainClass="'mb-8'" />
+        <livewire:search-form 
+            :mainClass="'mb-8'" 
+            :selectedType="session('search_type', 'properties')"
+            :selectedPurpose="session('search_purpose', 'all-purposes')"
+            :selectedRegion="session('search_region', '')"
+            :searchTerm="session('search_term', '')" 
+        />
     </div>
 
     <div class="flex flex-col py-4 space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 md:px-0">

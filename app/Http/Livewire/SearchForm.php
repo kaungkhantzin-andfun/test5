@@ -29,6 +29,13 @@ class SearchForm extends Component
     public $purposes;
     public $url;
     public $searchTerm = '';
+    
+    protected $queryString = [
+        'searchTerm' => ['except' => ''],
+        'selectedType' => ['except' => 'properties'],
+        'selectedPurpose' => ['except' => 'all-purposes'],
+        'selectedRegion' => ['except' => 'all-regions'],
+    ];
     public $filteredRegions = [];
 
     public $isHome;
@@ -62,10 +69,16 @@ class SearchForm extends Component
         return $query->get();
     }
 
-    public function mount($price = [])
+    public function mount($price = [], $selectedType = 'properties', $selectedPurpose = 'all-purposes', $selectedRegion = 'all-regions', $searchTerm = '')
     {
+        // Set initial values from session or parameters
+        $this->selectedType = $selectedType;
+        $this->selectedPurpose = $selectedPurpose;
+        $this->selectedRegion = $selectedRegion;
+        $this->searchTerm = $searchTerm;
+        
         $this->updateTownships();
-        $this->filteredRegions = $this->getFilteredRegions();
+        $this->filteredRegions = $this->getFilteredRegions($searchTerm);
 
         // other variables will be assigned automatically by livewire
         if (empty($price)) {
@@ -96,6 +109,14 @@ class SearchForm extends Component
     // customer wants to reload the page
     public function search()
     {
+        // Store search parameters in session
+        session([
+            'search_type' => $this->selectedType,
+            'search_purpose' => $this->selectedPurpose,
+            'search_region' => $this->selectedRegion,
+            'search_term' => $this->searchTerm
+        ]);
+        
         // Get the current scheme and host from the request
         $scheme = request()->getScheme();
         $host = request()->getHost();
