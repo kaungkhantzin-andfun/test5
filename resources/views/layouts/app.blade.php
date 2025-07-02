@@ -56,6 +56,7 @@
             {{-- font end nav for logged users --}}
             @if (Route::is('dashboard.*'))
             <x-dashboard.user-nav />
+            <a href="{{ route('bookings') }}" class="text-blue-500 hover:underline">{{__('My Bookings')}}</a>
             @endif
 
             {{ $slot }}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\BookingsList;
 use App\Models\Image;
 use App\Models\Slider;
 use App\Models\Category;
@@ -212,8 +213,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('properties-in-myanmar', Search::class)->name('all-properties');
     Route::get('properties-for-sale-in-myanmar', Search::class)->name('for-sale');
     Route::get('properties-for-rent-in-myanmar', Search::class)->name('for-rent');
-    Route::get('search/{type}/{purpose}/{region}/{township?}/{min?}/{max?}/{keyword?}', Search::class);
+    Route::get('search', Search::class);
     Route::get('compare-properties', ComparePage::class);
+
+    Route::get('/bookings', BookingsList::class)->name('bookings');
 
     // Public register route
     Route::get('/register', Register::class)->name('register');
@@ -235,6 +238,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         function () {
             Route::get('/{user}/edit', Register::class)->name('user.edit');
             Route::get('/saved', Profile::class)->name('saved');
+            Route::get('/bookings', \App\Http\Livewire\BookingsList::class)->name('bookings');
         }
     );
 
@@ -242,7 +246,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth:sanctum', 'verified']], function () {
         // Dashboard routes for all users
         // Dashboard
-        Route::get('/', Dashboard::class)->name('dashboard');
+        Route::get('/', Dashboard::class)->name('index');
 
         // Enquiries route
         Route::get('/enquiries', Enquiries::class);
@@ -252,13 +256,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('/properties/{property}/edit', EditProperties::class)->name('pptedit');
         Route::get('/properties/create', EditProperties::class)->name('pptcreate');
 
-        Route::group(['prefix' => 'blog-posts'], function () {
-            // Blog routes
-            Route::get('/', Blogs::class);
-            Route::get('/{blog}/edit', EditBlogs::class)->name('edit-post');
-            Route::get('/create', EditBlogs::class)->name('create-post');
-        });
-
+        Route::get('/bookings', \App\Http\Livewire\BookingsList::class)->name('bookings');
         Route::get('/top-up', TopUp::class)->name('top-up');
 
         // Dashboard routes for admin users only

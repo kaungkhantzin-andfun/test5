@@ -30,6 +30,14 @@ class Search extends Component
     public $pageTitle;
     public $pageDescription;
 
+    public $adults;
+
+    public $children;
+    // public $check_in_date;
+    // public $check_out_date;
+
+    public $selectedDate;
+
     public $price = [
         'min' => '',
         'max' => '',
@@ -97,6 +105,10 @@ class Search extends Component
             $this->selectedTownship,
             $this->price['min'] ?? '',
             $this->price['max'] ?? '',
+            $this->adults ?? '',
+            $this->children ?? '',
+            $this->check_in_date ?? '',
+            $this->check_out_date ?? '',
             $this->keyword ?? ''
         ]);
         
@@ -112,13 +124,18 @@ class Search extends Component
         return redirect()->to($url);
     }
 
-    public function mount($type = 'properties', $purpose = 'all-purposes', $region = 'all-regions', $township = 'all-townships', $min = '', $max = '', $keyword = '')
+    public function mount($type = 'properties', $purpose = 'all-purposes', $region = 'all-regions', $township = 'all-townships', $min = '', $max = '', $adults = 1, $children = 0, $check_in_date = '', $check_out_date = '', $keyword = '')
     {
         $this->filteredRegions = $this->getFilteredRegions();
         // Search with property ID
         if (!empty($keyword) && (Str::contains(Str::lower($keyword), ['mhs-', 'mhr-', 'mh-']))) {
             $this->searchWithId($keyword);
         }
+
+        $this->adults = $adults;
+        $this->children = $children;
+        $this->check_in_date = $check_in_date;
+        $this->check_out_date = $check_out_date;
 
         $this->selectedType = $type;
 
@@ -292,6 +309,10 @@ class Search extends Component
             "/$this->selectedTownship" .
             "/" . $this->price['min'] .
             "/" . $this->price['max'] .
+            "/" . $this->adults .
+            "/" . $this->children .
+            "/" . $this->check_in_date .
+            "/" . $this->check_out_date .
             ($this->keyword ? "/$this->keyword" : '') .
             // (!empty($sorting) || !empty($page) ? '?' : '') .
             // (!empty($sorting) ? $sorting : '') .
@@ -338,6 +359,20 @@ class Search extends Component
                 $query->whereHas('location', function ($query) {
                     $query->where('locations.slug', $this->selectedTownship);
                 });
+            })
+            ->when($this->check_in_date && $this->check_out_date, function ($query) {
+                $query->whereDoesntHave('bookings', function ($query) {
+                    $query->where(function ($query) {
+                        $query->where('check_in_date', '<=', $this->check_out_date)
+                            ->where('check_out_date', '>=', $this->check_in_date);
+                    });
+                });
+            })
+            ->when($this->adults, function ($query) {
+                $query->where('beds', '>=', $this->adults);
+            })
+            ->when($this->children, function ($query) {
+                $query->where('baths', '>=', $this->children);
             })
             ->when($this->keyword != null, function ($query) {
                 $query->whereHas('detail', function ($query) {

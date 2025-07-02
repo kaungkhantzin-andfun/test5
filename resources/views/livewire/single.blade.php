@@ -319,6 +319,40 @@
                 </div>
                 <span class="tooltiptext">{{__('Location')}}</span>
             </section>
+
+            <section>
+                <h2 class="single-h2">{{__('Book this Property')}}</h2>
+                <div class="p-4 space-y-4 border border-gray-200 rounded shadow-raised">
+                    @if (session()->has('success'))
+                        <div class="p-4 text-white bg-green-500 rounded">
+                            {{ session('success') }}
+                            @if (session()->has('booking_details'))
+                                <p>{{__('Check-in Date')}}: {{ session('booking_details')['check_in_date'] }}</p>
+                                <p>{{__('Check-out Date')}}: {{ session('booking_details')['check_out_date'] }}</p>
+                                <p>{{__('Number of Guests')}}: {{ session('booking_details')['number_of_guests'] }}</p>
+                            @endif
+                        </div>
+                    @endif
+                    <form wire:submit.prevent="booking">
+                        <div class="mb-4">
+                            <label for="check_in_date" class="block text-sm font-medium text-gray-700">{{__('Check-in Date')}}</label>
+                            <input type="date" id="check_in_date" wire:model="check_in_date" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            @error('check_in_date') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="check_out_date" class="block text-sm font-medium text-gray-700">{{__('Check-out Date')}}</label>
+                            <input type="date" id="check_out_date" wire:model="check_out_date" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            @error('check_out_date') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="number_of_guests" class="block text-sm font-medium text-gray-700">{{__('Number of Guests')}}</label>
+                            <input type="number" id="number_of_guests" wire:model="number_of_guests" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            @error('number_of_guests') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <button type="submit" class="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">{{__('Book Now')}}</button>
+                    </form>
+                </div>
+            </section>
         </div>
     </div>
 

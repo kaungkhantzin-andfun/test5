@@ -11,30 +11,22 @@ use App\Models\PropertyPurpose;
 class SearchForm extends Component
 {
     // these variable will be automatically assigned by livewire
-    public $keyword;
-    public $selectedType = 'properties';
-    public $selectedPurpose = 'all-purposes';
     public $selectedRegion = 'all-regions';
-    public $selectedTownship = 'all-townships';
-    public $featured;
 
-    public $price = [
-        'min' => '',
-        'max' => '',
-        'all_min' => '',
-        'all_max' => '',
-    ];
+    public $adults = 1;
+    public $children = 0;
+    public $selectedDate;
 
-    public $townships = [];
-    public $purposes;
+
     public $url;
     public $searchTerm = '';
     
     protected $queryString = [
         'searchTerm' => ['except' => ''],
-        'selectedType' => ['except' => 'properties'],
-        'selectedPurpose' => ['except' => 'all-purposes'],
         'selectedRegion' => ['except' => 'all-regions'],
+        'selectedDate' => ['except' => ''],
+        'adults' => ['except' => 1],
+        'children' => ['except' => 0],
     ];
     public $filteredRegions = [];
 
@@ -55,7 +47,11 @@ class SearchForm extends Component
     public function selectRegion($regionSlug)
     {
         $this->selectedRegion = $regionSlug;
-        $this->updateTownships();
+        $region = Location::where('slug', $regionSlug)->first();
+        if ($region) {
+            $this->searchTerm = $region->name;
+        }
+        $this->filteredRegions = [];
     }
 
     protected function getFilteredRegions($searchTerm = '')
@@ -66,89 +62,32 @@ class SearchForm extends Component
             $query->where('name', 'like', '%' . $searchTerm . '%');
         }
         
-        return $query->get();
+        return $query->limit(10)->get();
     }
 
-    public function mount($price = [], $selectedType = 'properties', $selectedPurpose = 'all-purposes', $selectedRegion = 'all-regions', $searchTerm = '')
+    public function mount($selectedRegion = 'all-regions', $searchTerm = '', $selectedDate = null, $adults = 1, $children = 0)
     {
         // Set initial values from session or parameters
-        $this->selectedType = $selectedType;
-        $this->selectedPurpose = $selectedPurpose;
         $this->selectedRegion = $selectedRegion;
         $this->searchTerm = $searchTerm;
+        $this->selectedDate = $selectedDate;
+        $this->adults = $adults;
+        $this->children = $children;
         
-        $this->updateTownships();
         $this->filteredRegions = $this->getFilteredRegions($searchTerm);
-
-        // other variables will be assigned automatically by livewire
-        if (empty($price)) {
-            // Getting min and max prices
-            $this->price['min'] = $this->price['all_min'] = Property::min('price');
-            $this->price['max'] = $this->price['all_max'] = Property::max('price');
-        } else {
-            $this->price = $price;
-        }
-
-        // Get property purposes
-        $this->purposes = PropertyPurpose::select('id', 'slug', 'name')->get();
-    }
-
-    public function updateTownships()
-    {
-        if ($this->selectedRegion != null && $this->selectedRegion != 'all-regions') {
-            $parent_location = Location::whereSlug($this->selectedRegion)->first();
-
-            if (!empty($parent_location)) {
-                $this->townships = Location::where('parent_id', $parent_location->id)->select('id', 'slug', 'name')->get();
-            }
-        } else {
-            $this->townships = [];
-        }
     }
 
     // customer wants to reload the page
     public function search()
     {
-        // Store search parameters in session
-        session([
-            'search_type' => $this->selectedType,
-            'search_purpose' => $this->selectedPurpose,
-            'search_region' => $this->selectedRegion,
-            'search_term' => $this->searchTerm
-        ]);
-        
-        // Get the current scheme and host from the request
-        $scheme = request()->getScheme();
-        $host = request()->getHost();
-        $port = request()->getPort();
-        
-        // Build the base URL
-        $baseUrl = "{$scheme}://{$host}";
-        if (!in_array($port, [80, 443])) {
-            $baseUrl .= ":{$port}";
-        }
-        
-        // Build the search path
-        $path = '/search/' . implode('/', [
-            $this->selectedType,
-            $this->selectedPurpose,
-            $this->selectedRegion,
-            $this->selectedTownship,
-            $this->price['min'],
-            $this->price['max'],
-            $this->keyword ?: ''
-        ]);
-        
-        // Remove any double slashes that might occur from empty values
-        $path = preg_replace('#/+#', '/', $path);
-        
-        // Remove trailing slashes
-        $path = rtrim($path, '/');
-        
-        // Build the full URL
-        $url = $baseUrl . $path;
-        
-        return redirect()->to($url);
+        $queryParams = [
+            'location' => $this->selectedRegion,
+            'date' => $this->selectedDate,
+            'adults' => $this->adults,
+            'children' => $this->children,
+        ];
+
+        return redirect()->to('/search?' . http_build_query($queryParams));
     }
 
     public function render()

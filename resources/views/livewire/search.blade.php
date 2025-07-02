@@ -10,10 +10,12 @@
     <div class="mb-8">
         <livewire:search-form 
             :mainClass="'mb-8'" 
-            :selectedType="session('search_type', 'properties')"
-            :selectedPurpose="session('search_purpose', 'all-purposes')"
-            :selectedRegion="session('search_region', '')"
-            :searchTerm="session('search_term', '')" 
+            :selectedType="$selectedType"
+            :selectedPurpose="$selectedPurpose"
+            :selectedRegion="$selectedRegion"
+            :searchTerm="$keyword"
+            :audults="$adults"
+            :children="$children" 
         />
     </div>
 

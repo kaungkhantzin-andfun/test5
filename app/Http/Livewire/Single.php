@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Property;
+use App\Models\Booking;
 use App\Helpers\MyHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +15,15 @@ class Single extends Component
     public $facilities;
     public $similarProperties;
     public $seoImages;
+    public $check_in_date;
+    public $check_out_date;
+    public $number_of_guests;
+
+    protected $rules = [
+        'check_in_date' => 'required|date|after_or_equal:today',
+        'check_out_date' => 'required|date|after:check_in_date',
+        'number_of_guests' => 'required|integer|min:1',
+    ];
 
     public function mount($id)
     {
@@ -109,6 +119,36 @@ class Single extends Component
         MyHelper::increaseViewCount($properties);
 
         return $properties;
+    }
+
+    public function booking()
+    {
+        $this->validate();
+
+        if (Auth::check()) {
+            $booking = new Booking();
+            $booking->user_id = Auth::user()->id;
+            $booking->property_id = $this->property->id;
+            $booking->check_in_date = $this->check_in_date;
+            $booking->check_out_date = $this->check_out_date;
+            $booking->number_of_guests = $this->number_of_guests;
+            $booking->total_price = $this->property->price; // This is a placeholder. You should calculate the actual price.
+            $booking->save();
+
+            session()->flash('success', 'Property booked successfully.');
+            session()->flash('booking_details', [
+                'check_in_date' => $this->check_in_date,
+                'check_out_date' => $this->check_out_date,
+                'number_of_guests' => $this->number_of_guests,
+            ]);
+
+            $this->check_in_date = '';
+            $this->check_out_date = '';
+            $this->number_of_guests = '';
+        } else {
+            session()->flash('error', 'You need to login to book the property.');
+            return redirect()->to('/login');
+        }
     }
 
     public function render()
