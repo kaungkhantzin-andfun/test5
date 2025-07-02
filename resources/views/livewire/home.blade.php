@@ -121,30 +121,7 @@
 
     {{-- without wire:ignore this part is reloading (including images) everytime price on search form is change
     we don't want the server to be busy sending images again and again --}}
-    <style>
-        .card-overlay {
-            position: relative;
-        }
 
-        .card-overlay .overlay-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1rem;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .card-overlay img {
-            width: 100%;
-            height: 48vh;
-            object-fit: cover;
-        }
-    </style>
     <section class="px-4 py-10 mx-auto lg:container xl:px-0">
 
         <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-12">
@@ -420,3 +397,28 @@
     </section>
 
 </div>
+
+<style>
+    .card-overlay {
+        position: relative;
+    }
+
+    .card-overlay .overlay-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-overlay img {
+        width: 100%;
+        height: 48vh;
+        object-fit: cover;
+    }
+</style>

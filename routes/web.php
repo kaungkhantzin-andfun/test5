@@ -242,7 +242,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth:sanctum', 'verified']], function () {
         // Dashboard routes for all users
         // Dashboard
-        Route::get('/', Dashboard::class)->name('index');
+        Route::get('/', Dashboard::class)->name('dashboard');
 
         // Enquiries route
         Route::get('/enquiries', Enquiries::class);
